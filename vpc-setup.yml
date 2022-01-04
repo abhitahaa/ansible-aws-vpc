@@ -138,3 +138,20 @@
                gateway_id: "{{NATGW_out.gateway_id}}"
           register: priRT_out
 
+        - debug:
+            var: "{{item}}"
+          loop:
+            - vpcout.vpc.id
+            - pubsub1_out.subnet.id
+
+        - set_fact:       #use this module to store variable values which we can later use in the script
+            vpcid: "{{vpcout.vpc.id}}"
+            cacheable: yes
+
+    - name: Create variables file for vpc output
+          copy:
+            content: "vpcid: {{vpcout.vpc.id}}"
+            dest: var/output_vars
+
+
+
